@@ -4,7 +4,7 @@ import { Badge } from 'reactstrap';
 const Header = (props) => {
     return (
         <div className="p-5 d-flex justify-content-center">
-            <h1><Badge color="secondary">Links for #React</Badge></h1>
+            <h1><Badge color="secondary">Sharelinks on #React</Badge></h1>
         </div>
     );
 }

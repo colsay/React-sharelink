@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { v1 as uuidv1 } from 'uuid'
+import { isCompositeComponent } from 'react-dom/test-utils';
 import { Button, Form, FormGroup, Label, Input, Formtext, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 
 const ModalExample = (props) => {
     const {
@@ -8,30 +11,60 @@ const ModalExample = (props) => {
     } = props;
 
     const [modal, setModal] = useState(false);
-
     const toggle = () => setModal(!modal);
+
+    const [name, setName] = useState("")
+    const [url, setUrl] = useState("")
+    const [tags, setTags] = useState("")
+
+    const handleNameChange = (event) => {
+        setName(event.target.value)
+    }
+
+    const handleUrlChange = (event) => {
+        setUrl(event.target.value)
+    }
+
+    const handletagsChange = (event) => {
+        setTags(event.target.value)
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // let newItem2 = { name, url, tags }
+        let newItem = { name: name, url: url, tags: tags, id: uuidv1() };
+        console.log("hi", newItem);
+        props.addItem(newItem);
+        setName('')
+        setUrl('')
+        setTags('')
+    }
 
     return (
         <div>
             <Button color="success" onClick={toggle}>Add Link</Button>
             <Modal isOpen={modal} toggle={toggle} className={className}>
-                <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                <ModalHeader toggle={toggle}>Add Your Favourite Websites</ModalHeader>
                 <ModalBody>
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <FormGroup>
-                            <Label for="exampleEmail">Name</Label>
-                            <Input type="text" name="email" id="exampleEmail" placeholder="Name" />
-                            <Label for="exampleText">URL</Label>
-                            <Input type="text" name="text" id="exampleText" placeholder="URL" />
-                            <Label for="exampleText">Tags</Label>
-                            <Input type="text" name="text" id="exampleText" placeholder="Tags" />
+
+                            <Label for="Name">Name</Label>
+                            <Input type="text" name="email" id="exampleEmail" placeholder="Name" value={name} onChange={handleNameChange} required />
+
+                            <Label for="URL">URL</Label>
+                            <Input type="text" name="text" id="exampleText" placeholder="URL" value={url} onChange={handleUrlChange} required />
+
+                            <Label for="Tags">Tags</Label>
+                            <Input type="text" name="text" id="exampleText" placeholder="Tags" value={tags} onChange={handletagsChange} />
+
                         </FormGroup>
+                        <ModalFooter>
+                            <Button type="submit" color="primary" onClick={toggle}>Submit</Button>{' '}
+                            <Button color="danger" onClick={toggle}>Cancel</Button>
+                        </ModalFooter>
                     </Form>
                 </ModalBody>
-                <ModalFooter>
-                    <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
-                </ModalFooter>
             </Modal>
         </div>
     );
