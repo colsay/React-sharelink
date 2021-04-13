@@ -31,7 +31,6 @@ const ModalExample = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // let newItem2 = { name, url, tags }
         let newItem = { name: name, url: url, tags: tags, id: uuidv1() };
         console.log("hi", newItem);
         props.addItem(newItem);
@@ -55,7 +54,7 @@ const ModalExample = (props) => {
                             <Label for="URL">URL</Label>
                             <Input type="text" name="text" id="exampleText" placeholder="URL" value={url} onChange={handleUrlChange} required />
 
-                            <Label for="Tags">Tags</Label>
+                            <Label for="Tags">Tag (1 tag only)</Label>
                             <Input type="text" name="text" id="exampleText" placeholder="Tags" value={tags} onChange={handletagsChange} />
 
                         </FormGroup>
