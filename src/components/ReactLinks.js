@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
 import modal from './modal'
+import { useSelector, useDispatch } from "react-redux";
+import { DeleteLink, loadLinkThunk } from '../redux/links/actions';
+
 
 const ReactLinks = ({ item, remove }) => {
     const [searchTerm, setSearchTerm] = React.useState("");
+
+    const links = useSelector(state => state.shareLinkStore.links)
+    const dispatch = useDispatch();
+
+    const deleteLink = (id) => dispatch(DeleteLink(id))
+
     const handleChange = event => {
         setSearchTerm(event.target.value);
     };
 
-    const results = !searchTerm
-        ? item
-        : item.filter(a =>
-            a.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
-        );
+    // const results = !searchTerm
+    //     ? item
+    //     : item.filter(a =>
+    //         a.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+    //     );
 
     return (
-
-
         <div className="p-2 d-flex justify-content-center">
             <div>
                 <input
@@ -25,21 +32,22 @@ const ReactLinks = ({ item, remove }) => {
                     onChange={handleChange}
                 />
 
-                {results.map(item => (
+                {/* {results.map(item => (
                     <div>
                         <a href={`//${item.url}`}>{item.name}</a>
                         <p>Tags: {item.tags}</p>
                     </div>
-                ))}
+                ))} */}
 
             </div>
+            <button onClick={() => dispatch(loadLinkThunk())}>load links</button>
             <div>
                 <ol>
-                    {item.map((item) =>
+                    {links.map((item) =>
                         <li className="pt-3" key={item.id}>
-                            <a href={`//${item.url}`}>{item.name}</a>
+                            <a href={`${item.url}`}>{item.name}</a>
                             <p>Tags: {item.tags}</p>
-                            <button onClick={() => remove(item.id)} className="btn btn-danger">delete</button>
+                            <button onClick={() => { deleteLink(item) }} className="btn btn-danger">delete</button>
                         </li>)}
                 </ol>
             </div>

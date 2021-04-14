@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { v1 as uuidv1 } from 'uuid'
+import { useSelector, useDispatch } from "react-redux";
 import { isCompositeComponent } from 'react-dom/test-utils';
 import { Button, Form, FormGroup, Label, Input, Formtext, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { AddLink, DeleteLink, loadLinkThunk } from "../redux/links/actions"
+
+// Import actions
 
 
 const ModalExample = (props) => {
+    // const links = useSelector(state => state.shareLinkStore.links);
+    const dispatch = useDispatch();
+
     const {
         buttonLabel,
         className
@@ -29,11 +36,17 @@ const ModalExample = (props) => {
         setTags(event.target.value)
     }
 
+    const addLink = (item) => dispatch(AddLink(item))
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        let newItem = { name: name, url: url, tags: tags, id: uuidv1() };
-        console.log("hi", newItem);
-        props.addItem(newItem);
+        let newItem = {
+            name: name,
+            url: url,
+            tags: tags,
+            id: uuidv1()
+        };
+        addLink(newItem);
         setName('')
         setUrl('')
         setTags('')

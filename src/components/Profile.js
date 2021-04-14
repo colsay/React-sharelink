@@ -18,8 +18,7 @@ const Profile = (props) => {
                 <CardBody>
                     <CardTitle tag="h5">{props.name}</CardTitle>
                     <CardSubtitle tag="h6" className="mb-2 text-muted">React beginner</CardSubtitle>
-                    <CardText>{props.number} fav links</CardText>
-                    <CardText>xx shared links</CardText>
+                    <CardText>{props.number} favourite links</CardText>
                 </CardBody>
             </Card>
         </div>
