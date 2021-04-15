@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import modal from './modal'
 import { useSelector, useDispatch } from "react-redux";
-import { DeleteLink, loadLinkThunk } from '../redux/links/actions';
+import { DeleteLink } from '../redux/links/actions';
 
 
-const ReactLinks = ({ item, remove }) => {
-    const [searchTerm, setSearchTerm] = React.useState("");
+const ReactLinks = () => {
+    const [searchTerm, setSearchTerm] = useState("");
 
     const links = useSelector(state => state.shareLinkStore.links)
     const dispatch = useDispatch();
@@ -15,12 +14,6 @@ const ReactLinks = ({ item, remove }) => {
     const handleChange = event => {
         setSearchTerm(event.target.value);
     };
-
-    // const results = !searchTerm
-    //     ? item
-    //     : item.filter(a =>
-    //         a.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
-    //     );
 
     return (
         <div className="p-2 d-flex justify-content-center">
@@ -32,23 +25,19 @@ const ReactLinks = ({ item, remove }) => {
                     onChange={handleChange}
                 />
 
-                {/* {results.map(item => (
-                    <div>
-                        <a href={`//${item.url}`}>{item.name}</a>
-                        <p>Tags: {item.tags}</p>
-                    </div>
-                ))} */}
-
-            </div>
-            <button onClick={() => dispatch(loadLinkThunk())}>load links</button>
-            <div>
                 <ol>
-                    {links.map((item) =>
-                        <li className="pt-3" key={item.id}>
-                            <a href={`${item.url}`}>{item.name}</a>
-                            <p>Tags: {item.tags}</p>
-                            <button onClick={() => { deleteLink(item) }} className="btn btn-danger">delete</button>
-                        </li>)}
+                    {links
+                        .filter(item =>
+                            [item.title, item.tags]
+                                .map(arr => arr.toLowerCase())
+                                .some(search => search.includes(searchTerm.toLowerCase()))
+                        )
+                        .map((item) =>
+                            <li className="pt-3" key={item.id}>
+                                <a href={`//${item.url}`} target="_blank">{item.title}</a>
+                                <p>Tag: {item.tags}</p>
+                                <button onClick={() => { deleteLink(item) }} className="btn btn-danger">delete</button>
+                            </li>)}
                 </ol>
             </div>
         </div>

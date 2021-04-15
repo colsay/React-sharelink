@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import faker from "faker"
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from "react-redux";
 import { Container, Row, Col } from 'reactstrap';
 import './App.css';
 import Modal from './components/modal'
@@ -10,39 +11,11 @@ import ReactLinks from './components/ReactLinks'
 import { loadLinkThunk } from './redux/links/actions';
 
 function App() {
+  const dispatch = useDispatch();
 
-  // function useStickyState(defaultValue, key) {
-  //   const [value, setValue] = useState(() => {
-  //     const stickyValue = window.localStorage.getItem(key);
-  //     return stickyValue !== null
-  //       ? JSON.parse(stickyValue)
-  //       : defaultValue;
-  //   });
-
-  //   useEffect(() => {
-  //     window.localStorage.setItem(key, JSON.stringify(value));
-  //   }, [key, value]);
-  //   return [value, setValue];
-  // }
-
-  // useEffect(() => {
-  //   loadLinkThunk()
-  //     .then(items => {
-  //       console.log(items)
-  //     })
-  // }, [])
-
-
-  // const [item, setItem] = useStickyState([], "data")
-
-  // const addItem = (obj) => {
-  //   setItem([...item, obj])
-  // }
-
-  // const handleRemove = (id) => {
-  //   const newList = item.filter((item) => item.id !== id);
-  //   setItem(newList);
-  // }
+  useEffect(() => {
+    dispatch(loadLinkThunk());
+  }, [])
 
   return (
     <Container fluid className="text-center">

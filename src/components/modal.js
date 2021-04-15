@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { v1 as uuidv1 } from 'uuid'
-import { useSelector, useDispatch } from "react-redux";
-import { isCompositeComponent } from 'react-dom/test-utils';
-import { Button, Form, FormGroup, Label, Input, Formtext, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { AddLink, DeleteLink, loadLinkThunk } from "../redux/links/actions"
+import { useDispatch } from "react-redux";
+// import { isCompositeComponent } from 'react-dom/test-utils';
+import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { AddLinkThunk } from "../redux/links/actions"
 
 // Import actions
 
@@ -13,7 +13,6 @@ const ModalExample = (props) => {
     const dispatch = useDispatch();
 
     const {
-        buttonLabel,
         className
     } = props;
 
@@ -36,7 +35,7 @@ const ModalExample = (props) => {
         setTags(event.target.value)
     }
 
-    const addLink = (item) => dispatch(AddLink(item))
+    const addLink = (item) => dispatch(AddLinkThunk(item))
 
     const handleSubmit = (event) => {
         event.preventDefault();
