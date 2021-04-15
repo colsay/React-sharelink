@@ -67,7 +67,7 @@ const ModalExample = (props) => {
                             <Input type="text" name="text" id="exampleText" placeholder="URL" value={url} onChange={handleUrlChange} required />
 
                             <Label for="Tags">Tag (1 tag only)</Label>
-                            <Input type="text" name="text" id="exampleText" placeholder="Tags" value={tags} onChange={handletagsChange} />
+                            <Input type="text" name="text" id="exampleText" placeholder="Tag" value={tags} onChange={handletagsChange} />
 
                         </FormGroup>
                         <ModalFooter>

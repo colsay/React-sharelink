@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { DeleteLink } from '../redux/links/actions';
+import { Card, CardTitle, CardText } from 'reactstrap';
 
 
 const ReactLinks = () => {
@@ -23,22 +24,22 @@ const ReactLinks = () => {
                     placeholder="Search"
                     value={searchTerm}
                     onChange={handleChange}
+                    style={{ width: '300px' }}
                 />
-
-                <ol>
-                    {links
-                        .filter(item =>
-                            [item.title, item.tags]
-                                .map(arr => arr.toLowerCase())
-                                .some(search => search.includes(searchTerm.toLowerCase()))
-                        )
-                        .map((item) =>
-                            <li className="pt-3" key={item.id}>
-                                <a href={`//${item.url}`} target="_blank">{item.title}</a>
-                                <p>Tag: {item.tags}</p>
-                                <button onClick={() => { deleteLink(item) }} className="btn btn-danger">delete</button>
-                            </li>)}
-                </ol>
+                <hr></hr>
+                {links
+                    .filter(item =>
+                        [item.title, item.tags]
+                            .map(arr => arr.toLowerCase())
+                            .some(search => search.includes(searchTerm.toLowerCase()))
+                    )
+                    .map((item) =>
+                        <Card body className="p-0">
+                            <CardTitle className="pt-1 mb-0" key={item.id}><a href={`//${item.url}`} target="_blank">{item.title}</a></CardTitle>
+                            <CardText>Tag: {item.tags} <button onClick={() => { deleteLink(item) }} className="m-2 btn btn-danger">Delete</button></CardText>
+                        </Card>
+                    )
+                }
             </div>
         </div>
     );
